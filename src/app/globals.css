@@ -1,0 +1,281 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================
+   🌿 NATURE-INSPIRED DESIGN SYSTEM
+   ================================ */
+
+@layer base {
+  :root {
+    /* 🌱 Core Nature Palette */
+    --forest-canopy: 140 45% 12%;        /* Deep forest green #1a4a1a */
+    --moss-stone: 135 35% 25%;           /* Rich moss green #2d5a2d */
+    --spring-leaf: 125 55% 45%;          /* Vibrant spring green #4a9a4a */
+    --morning-dew: 120 40% 75%;          /* Soft morning green #a8d4a8 */
+    --sunlit-meadow: 110 30% 85%;        /* Light meadow green #d6e8d6 */
+    
+    /* ☀️ Accent & Highlight Colors */
+    --golden-hour: 45 95% 55%;           /* Warm golden yellow #f2c744 */
+    --sunset-amber: 35 85% 65%;          /* Amber sunset #e6a855 */
+    --morning-mist: 60 15% 96%;          /* Soft cream white #f8f9f6 */
+    --cloud-white: 0 0% 100%;            /* Pure white #ffffff */
+    
+    /* 🖤 Text & Neutral Tones */
+    --charcoal-bark: 0 0% 15%;           /* Dark charcoal #262626 */
+    --stone-gray: 0 0% 45%;              /* Medium gray #737373 */
+    --pebble-gray: 0 0% 65%;             /* Light gray #a6a6a6 */
+    
+    /* 🌊 Interactive States */
+    --danger-berry: 355 75% 55%;         /* Red berry #d9455f */
+    --warning-autumn: 25 85% 60%;        /* Autumn orange #e6935c */
+    --success-pine: 155 60% 40%;         /* Pine success #408066 */
+    --info-sky: 200 70% 55%;             /* Sky blue #4d9dd9 */
+    
+    /* 💫 Effects & Shadows */
+    --shadow-soft: 140 20% 5% / 0.08;    /* Subtle shadow */
+    --shadow-medium: 140 25% 3% / 0.15;  /* Medium shadow */
+    --shadow-strong: 140 30% 2% / 0.25;  /* Strong shadow */
+    --glow-golden: 45 95% 55% / 0.3;     /* Golden glow effect */
+    
+    /* 📏 Spacing & Borders */
+    --border-radius-sm: 0.375rem;        /* 6px */
+    --border-radius-md: 0.5rem;          /* 8px */
+    --border-radius-lg: 0.75rem;         /* 12px */
+    --border-radius-xl: 1rem;            /* 16px */
+
+    /* ================================
+       🎨 SEMANTIC COLOR MAPPING
+       ================================ */
+    
+    /* Background & Surface Colors */
+    --background: 60 15% 96%;             /* morning-mist */
+    --foreground: 0 0% 15%;               /* charcoal-bark */
+    
+    --surface: 0 0% 100%;                 /* cloud-white */
+    --surface-foreground: 0 0% 15%;       /* charcoal-bark */
+    --surface-elevated: 110 20% 98%;      /* Slightly elevated surface */
+    
+    /* Card Components */
+    --card: 0 0% 100%;                    /* cloud-white */
+    --card-foreground: 0 0% 15%;          /* charcoal-bark */
+    --card-border: 120 15% 88%;           /* Soft border */
+    
+    /* Popover & Overlays */
+    --popover: 0 0% 100%;                 /* cloud-white */
+    --popover-foreground: 0 0% 15%;       /* charcoal-bark */
+    --overlay: 140 30% 2% / 0.4;          /* Modal overlay */
+    
+    /* Primary Action Colors */
+    --primary: 140 45% 12%;               /* forest-canopy */
+    --primary-foreground: 0 0% 100%;      /* cloud-white */
+    --primary-hover: 140 45% 18%;         /* Lighter primary */
+    --primary-active: 140 45% 8%;         /* Darker primary */
+    
+    /* Secondary Action Colors */
+    --secondary: 120 40% 75%;             /* morning-dew */
+    --secondary-foreground: 140 45% 12%;  /* forest-canopy */
+    --secondary-hover: 120 40% 80%;       /* Lighter secondary */
+    --secondary-active: 120 40% 70%;      /* Darker secondary */
+    
+    /* Accent & Highlight */
+    --accent: 125 55% 45%;                /* spring-leaf */
+    --accent-foreground: 0 0% 100%;       /* cloud-white */
+    --accent-hover: 125 55% 52%;          /* Lighter accent */
+    --accent-active: 125 55% 38%;         /* Darker accent */
+    
+    /* Muted & Subtle Elements */
+    --muted: 110 30% 85%;                 /* sunlit-meadow */
+    --muted-foreground: 0 0% 45%;         /* stone-gray */
+    --muted-hover: 110 30% 88%;           /* Lighter muted */
+    
+    /* Interactive Elements */
+    --interactive: 45 95% 55%;            /* golden-hour */
+    --interactive-foreground: 140 45% 12%; /* forest-canopy */
+    --interactive-hover: 45 95% 62%;      /* Brighter golden */
+    
+    /* Status Colors */
+    --success: 155 60% 40%;               /* success-pine */
+    --success-foreground: 0 0% 100%;      /* cloud-white */
+    --warning: 25 85% 60%;                /* warning-autumn */
+    --warning-foreground: 0 0% 15%;       /* charcoal-bark */
+    --danger: 355 75% 55%;                /* danger-berry */
+    --danger-foreground: 0 0% 100%;       /* cloud-white */
+    --info: 200 70% 55%;                  /* info-sky */
+    --info-foreground: 0 0% 100%;         /* cloud-white */
+    
+    /* Form Elements */
+    --input: 0 0% 100%;                   /* cloud-white */
+    --input-border: 120 15% 85%;          /* Soft input border */
+    --input-focus: 125 55% 45%;           /* spring-leaf */
+    --input-placeholder: 0 0% 65%;        /* pebble-gray */
+    
+    /* Navigation & Sidebar */
+    --nav-background: 140 25% 97%;        /* Very light forest */
+    --nav-foreground: 0 0% 15%;           /* charcoal-bark */
+    --nav-active: 125 55% 45%;            /* spring-leaf */
+    --nav-hover: 120 40% 75%;             /* morning-dew */
+    
+    --sidebar-background: 140 20% 98%;    /* Ultra light forest */
+    --sidebar-foreground: 0 0% 15%;       /* charcoal-bark */
+    --sidebar-border: 120 15% 88%;        /* Soft sidebar border */
+    --sidebar-active: 125 55% 45%;        /* spring-leaf */
+    --sidebar-hover: 120 40% 75%;         /* morning-dew */
+    
+    /* Chart & Data Visualization */
+    --chart-primary: 125 55% 45%;         /* spring-leaf */
+    --chart-secondary: 45 95% 55%;        /* golden-hour */
+    --chart-tertiary: 200 70% 55%;        /* info-sky */
+    --chart-quaternary: 25 85% 60%;       /* warning-autumn */
+    --chart-quinary: 355 75% 55%;         /* danger-berry */
+    
+    /* Legacy Mappings for Compatibility */
+    --destructive: 355 75% 55%;           /* danger-berry */
+    --destructive-foreground: 0 0% 100%;  /* cloud-white */
+    --border: 120 15% 85%;                /* Soft border */
+    --ring: 45 95% 55%;                   /* golden-hour */
+    --radius: 0.5rem;                     /* Default radius */
+  }
+
+  /* ================================
+     🌙 DARK THEME VARIATIONS
+     ================================ */
+  
+  .dark {
+    /* Dark Nature Palette */
+    --forest-night: 140 25% 8%;           /* Deep night forest */
+    --midnight-moss: 135 20% 15%;         /* Dark moss */
+    --ember-glow: 45 80% 65%;             /* Warm ember glow */
+    --moonlit-mist: 120 8% 92%;           /* Moonlit text */
+    
+    /* Dark Theme Mappings */
+    --background: 140 25% 8%;             /* forest-night */
+    --foreground: 120 8% 92%;             /* moonlit-mist */
+    
+    --surface: 135 20% 12%;               /* Dark surface */
+    --surface-foreground: 120 8% 92%;     /* moonlit-mist */
+    --surface-elevated: 135 20% 15%;      /* Elevated dark surface */
+    
+    --card: 135 20% 12%;                  /* Dark card */
+    --card-foreground: 120 8% 92%;        /* moonlit-mist */
+    --card-border: 140 15% 25%;           /* Dark border */
+    
+    --popover: 135 20% 10%;               /* Dark popover */
+    --popover-foreground: 120 8% 92%;     /* moonlit-mist */
+    --overlay: 140 50% 2% / 0.6;          /* Darker overlay */
+    
+    --primary: 125 65% 55%;               /* Brighter primary for dark */
+    --primary-foreground: 140 25% 8%;     /* forest-night */
+    --primary-hover: 125 65% 62%;         /* Lighter primary hover */
+    --primary-active: 125 65% 48%;        /* Darker primary active */
+    
+    --secondary: 135 15% 25%;             /* Dark secondary */
+    --secondary-foreground: 120 8% 92%;   /* moonlit-mist */
+    --secondary-hover: 135 15% 30%;       /* Lighter secondary hover */
+    --secondary-active: 135 15% 20%;      /* Darker secondary active */
+    
+    --accent: 45 80% 65%;                 /* ember-glow */
+    --accent-foreground: 140 25% 8%;      /* forest-night */
+    --accent-hover: 45 80% 72%;           /* Lighter accent hover */
+    --accent-active: 45 80% 58%;          /* Darker accent active */
+    
+    --muted: 135 15% 20%;                 /* Dark muted */
+    --muted-foreground: 120 8% 65%;       /* Muted text */
+    --muted-hover: 135 15% 25%;           /* Lighter muted hover */
+    
+    --interactive: 45 80% 65%;            /* ember-glow */
+    --interactive-foreground: 140 25% 8%; /* forest-night */
+    --interactive-hover: 45 80% 72%;      /* Brighter interactive */
+    
+    /* Dark Status Colors */
+    --success: 155 55% 50%;               /* Brighter success */
+    --warning: 25 80% 65%;                /* Brighter warning */
+    --danger: 355 70% 60%;                /* Brighter danger */
+    --info: 200 65% 60%;                  /* Brighter info */
+    
+    /* Dark Form Elements */
+    --input: 135 15% 18%;                 /* Dark input */
+    --input-border: 140 15% 30%;          /* Dark input border */
+    --input-focus: 125 65% 55%;           /* Bright focus */
+    --input-placeholder: 120 8% 50%;      /* Dark placeholder */
+    
+    /* Dark Navigation */
+    --nav-background: 140 20% 10%;        /* Dark nav */
+    --nav-foreground: 120 8% 92%;         /* moonlit-mist */
+    --nav-active: 125 65% 55%;            /* Bright active */
+    --nav-hover: 135 15% 25%;             /* Dark hover */
+    
+    --sidebar-background: 140 25% 6%;     /* Darker sidebar */
+    --sidebar-foreground: 120 8% 92%;     /* moonlit-mist */
+    --sidebar-border: 140 15% 25%;        /* Dark sidebar border */
+    --sidebar-active: 125 65% 55%;        /* Bright active */
+    --sidebar-hover: 135 15% 20%;         /* Dark hover */
+    
+    /* Dark Charts */
+    --chart-primary: 125 65% 55%;         /* Bright primary */
+    --chart-secondary: 45 80% 65%;        /* ember-glow */
+    --chart-tertiary: 200 65% 60%;        /* Bright blue */
+    --chart-quaternary: 25 80% 65%;       /* Bright orange */
+    --chart-quinary: 355 70% 60%;         /* Bright red */
+    
+    /* Legacy Dark Mappings */
+    --destructive: 355 70% 60%;           /* Brighter destructive */
+    --destructive-foreground: 0 0% 100%;  /* White text */
+    --border: 140 15% 25%;                /* Dark border */
+    --ring: 45 80% 65%;                   /* ember-glow */
+  }
+}
+
+/* ================================
+   🎯 BASE STYLES & ENHANCEMENTS
+   ================================ */
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Enhanced focus styles */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Selection styling */
+  ::selection {
+    background: hsl(var(--accent) / 0.2);
+    color: hsl(var(--accent-foreground));
+  }
+  
+  /* Scrollbar styling for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: var(--border-radius-md);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: var(--border-radius-md);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+}
