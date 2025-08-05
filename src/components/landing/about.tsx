@@ -39,7 +39,7 @@ export function AboutSection() {
     {
       icon: Zap,
       title: "Our Why",
-      content: "Founded by transformation coach Dr. Jyothi Vasudev, SowSuccess believes that anyone can rise with the right tools, training, and support. You don't just grow; you help your entire community thrive.",
+      content: "SowSuccess believes that anyone can rise with the right tools, training, and support. You don't just grow; you help your entire community thrive.",
       delay: "400ms"
     }
   ];

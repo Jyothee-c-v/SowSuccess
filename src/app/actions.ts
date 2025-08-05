@@ -15,7 +15,7 @@ export async function registerUser(values: z.infer<typeof RegisterSchema>) {
     return { error: "Invalid fields!" };
   }
 
-  const { mobile, password } = validatedFields.data;
+  const { firstName, lastName, mobile, password } = validatedFields.data;
 
   try {
     const usersRef = collection(db, "users");
@@ -29,6 +29,8 @@ export async function registerUser(values: z.infer<typeof RegisterSchema>) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await setDoc(doc(db, "users", mobile), {
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
       mobile: mobile,
       hashedPassword: hashedPassword,
       createdAt: new Date(),

@@ -217,12 +217,12 @@ function PaymentStep({ userMobile, selectedProgramId, agreedPrice, referralCodeU
             <div className="flex items-center gap-2">
               <CreditCard className="w-4 h-4 text-muted-foreground"/>
               <span className="font-medium text-foreground">Account Number:</span>
-              <span className="text-foreground">921010006022717</span>
+              <span className="text-foreground">056005003791</span>
             </div>
             <div className="flex items-center gap-2">
               <Building className="w-4 h-4 text-muted-foreground"/>
               <span className="font-medium text-foreground">IFSC Code:</span>
-              <span className="text-foreground">UTIB0004405</span>
+              <span className="text-foreground">ICIC0000560</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-muted-foreground"/>

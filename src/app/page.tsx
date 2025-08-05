@@ -1,6 +1,5 @@
 import { HeroSection } from "@/components/landing/hero";
 import { AboutSection } from "@/components/landing/about";
-import { FounderSection } from "@/components/landing/founder";
 import { WhatIsSowSuccessSection } from "@/components/landing/what-is";
 import { WhyJoinSection } from "@/components/landing/why-join";
 import { TrainingProgramsSection } from "@/components/landing/programs";
@@ -13,7 +12,6 @@ export default function HomePage() {
     <>
       <HeroSection />
       <AboutSection />
-      <FounderSection />
       <WhatIsSowSuccessSection />
       <WhyJoinSection />
       <TrainingProgramsSection />

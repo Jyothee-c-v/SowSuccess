@@ -1,11 +1,10 @@
-
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, User, LogOut, Users as ReferralsIcon } from "lucide-react"; // Added ReferralsIcon
+import { Menu, User, LogOut, Users as ReferralsIcon } from "lucide-react";
 import { Logo } from "./logo";
 import { cn } from "@/lib/utils";
 import {
@@ -16,12 +15,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"; // Removed AvatarImage
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+// Import your Firebase functions
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase'; // Adjust path to your Firebase config
 
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/#about", label: "About Us" },
-  { href: "/#programs", label: "Programs" },
+  { href: "/#training-programs", label: "Programs" },
   { href: "/#faq", label: "FAQs" },
   { href: "/dashboard", label: "Dashboard", protected: true },
 ];
@@ -31,18 +33,69 @@ export function Navbar() {
   const router = useRouter();
   const isAuthenticated = pathname.startsWith('/dashboard');
 
-  const [userDetails, setUserDetails] = useState({ name: "Member", mobile: "" });
+  const [userDetails, setUserDetails] = useState({ 
+    firstName: "", 
+    lastName: "", 
+    displayName: "Member",
+    mobile: "" 
+  });
   const [isClient, setIsClient] = useState(false);
+
+  // Function to fetch user data from Firebase
+  const fetchUserData = async (mobile) => {
+    try {
+      // Assuming you store user data with mobile as document ID
+      // Adjust the collection name and document structure as needed
+      const userDoc = await getDoc(doc(db, 'users', mobile));
+      
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        return {
+          firstName: userData.firstName || '',
+          lastName: userData.lastName || '',
+          mobile: mobile
+        };
+      } else {
+        // If document doesn't exist, try to find by mobile field
+        // You might need to implement a query here if mobile is a field, not document ID
+        console.log('User document not found');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      return null;
+    }
+  };
 
   useEffect(() => {
     setIsClient(true);
     if (isAuthenticated && typeof window !== 'undefined') {
       const storedMobile = localStorage.getItem('registeredMobile');
       if (storedMobile) {
-        setUserDetails(prev => ({ ...prev, mobile: storedMobile }));
-        // In a real app, you might fetch user's name here too
+        // Fetch user data from Firebase
+        fetchUserData(storedMobile).then((userData) => {
+          if (userData) {
+            const displayName = `${userData.firstName} ${userData.lastName}`.trim() || "Member";
+            setUserDetails({
+              firstName: userData.firstName,
+              lastName: userData.lastName,
+              displayName: displayName,
+              mobile: userData.mobile
+            });
+          } else {
+            setUserDetails(prev => ({ 
+              ...prev, 
+              mobile: storedMobile,
+              displayName: "Member" 
+            }));
+          }
+        });
       } else {
-        setUserDetails(prev => ({ ...prev, mobile: "N/A" }));
+        setUserDetails(prev => ({ 
+          ...prev, 
+          mobile: "N/A",
+          displayName: "Member" 
+        }));
       }
     }
   }, [isAuthenticated, pathname]);
@@ -91,7 +144,10 @@ export function Navbar() {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                       <AvatarFallback>
-                        <User className="h-5 w-5" />
+                        {userDetails.firstName && userDetails.lastName 
+                          ? `${userDetails.firstName[0]}${userDetails.lastName[0]}`.toUpperCase()
+                          : <User className="h-5 w-5" />
+                        }
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -99,7 +155,7 @@ export function Navbar() {
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">{userDetails.name}</p>
+                      <p className="text-sm font-medium leading-none">{userDetails.displayName}</p>
                       <p className="text-xs leading-none text-muted-foreground">
                         {userDetails.mobile || 'Loading...'}
                       </p>
@@ -141,7 +197,10 @@ export function Navbar() {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full mr-2">
                     <Avatar className="h-8 w-8">
                        <AvatarFallback>
-                        <User className="h-5 w-5" />
+                        {userDetails.firstName && userDetails.lastName 
+                          ? `${userDetails.firstName[0]}${userDetails.lastName[0]}`.toUpperCase()
+                          : <User className="h-5 w-5" />
+                        }
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -149,7 +208,7 @@ export function Navbar() {
                 <DropdownMenuContent className="w-56" align="end" forceMount>
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">{userDetails.name}</p>
+                      <p className="text-sm font-medium leading-none">{userDetails.displayName}</p>
                       <p className="text-xs leading-none text-muted-foreground">
                         {userDetails.mobile || 'Loading...'}
                       </p>

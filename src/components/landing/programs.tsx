@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Check } from 'lucide-react';
-
+import Link from "next/link";
+// ...existing imports...
 const programs = [
   {
     id: 1,
@@ -46,6 +47,19 @@ const programs = [
     ]
   }
 ];
+const wishFulfillingPyramid = {
+  id: "pyramid",
+  emoji: "",
+  title: "Wish-Fulfilling Pyramid",
+  description: "A powerful tool for manifesting desires and promoting spiritual well-being",
+  features: [
+    "Write and place your wishes inside the pyramid",
+    "Ideal for meditation and spiritual practices",
+    "Strategic placement in northeast or center (Vastu/Feng Shui)",
+    "Amplifies intentions and positive energy",
+    "Promotes spiritual growth and well-being"
+  ]
+};
 
 // Floating background elements component matching About section
 const FloatingElements = () => (
@@ -138,7 +152,8 @@ export function TrainingProgramsSection() {
   }, []);
 
   return (
-    <div className="pt-20 md:pt-32 px-6 md:px-8 lg:px-12 relative overflow-hidden" style={{backgroundColor: '#FBF9F6'}}>
+    
+    <div id="training-programs" className="pt-20 md:pt-32 px-6 md:px-8 lg:px-12 relative overflow-hidden" style={{backgroundColor: '#FBF9F6'}}>
       
       <FloatingElements />
 
@@ -249,6 +264,10 @@ export function TrainingProgramsSection() {
           </div>
         </div>
 
+     
+
+{/* Existing navigation dots continue here */}
+
         {/* Navigation dots */}
         <div className="flex justify-center gap-3 mt-8">
           {programs.map((_, index) => (
@@ -263,17 +282,51 @@ export function TrainingProgramsSection() {
           ))}
         </div>
 
-        {/* Footer */}
-        <div className="text-center mt-16 p-6 rounded-lg border border-gray-200 bg-white shadow-lg transition-all duration-1000">
-          <p className="text-lg font-semibold" style={{color: '#2d5a27'}}>
-            💥 All programs are crafted and taught under the guidance of{' '}
-            <span className="font-bold" style={{color: '#7cb342'}}>
-              Dr. Jyothi Vasudev
-            </span>, 
-            combining decades of experience in training, healing, and coaching.
-          </p>
+{/* Products Section */}
+<div className="mt-32">
+  <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4" style={{color: '#2d5a27'}}>
+      Our{" "}
+      <span className="relative inline-block" style={{color: '#2d5a27'}}>
+        Products
+        <div className="absolute -bottom-2 left-0 w-full h-1 rounded-full transform scale-x-0 animate-scale-x" style={{backgroundColor: '#7cb342'}}></div>
+      </span>
+    </h2>
+    <p className="text-xl max-w-2xl mx-auto leading-relaxed" style={{color: '#2a2a2a'}}>
+      Transform your life with our specially designed products
+    </p>
+  </div>
+
+  <div className="rounded-lg p-8 border border-gray-200 bg-white shadow-lg transition-all duration-500 hover:shadow-2xl">
+    <div className="text-center mb-8">
+      <span className="text-4xl mb-4 inline-block">{wishFulfillingPyramid.emoji}</span>
+      <h3 className="text-3xl font-bold mb-4" style={{color: '#2d5a27'}}>
+        {wishFulfillingPyramid.title}
+      </h3>
+      <p className="text-lg mb-8 max-w-2xl mx-auto" style={{color: '#1a1a1a'}}>
+        {wishFulfillingPyramid.description}
+      </p>
+    </div>
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {wishFulfillingPyramid.features.map((feature, index) => (
+        <div 
+          key={index}
+          className="flex items-start gap-3 p-4 rounded-lg border border-gray-200 bg-white transition-all duration-300 hover:shadow-md group"
+        >
+          <div className="relative">
+            <Check className="w-5 h-5 mt-0.5 flex-shrink-0 transition-colors duration-300" style={{color: '#7cb342'}} />
+            <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-15 animate-ping" style={{backgroundColor: 'hsl(125, 30%, 75%)'}}></div>
+          </div>
+          <span style={{color: '#1a1a1a'}}>{feature}</span>
         </div>
-      </div>
+      ))}
+    </div>
+
+   
+  </div>
+</div>
+      </div> 
 
       <style jsx>{`
         @keyframes blink {

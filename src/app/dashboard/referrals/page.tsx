@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -6,13 +5,18 @@ import { useRouter } from 'next/navigation';
 import { getReferredUsers, type ReferredUser } from '@/app/actions';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Loader2, Users, AlertTriangle } from 'lucide-react';
+import { Loader2, Users, AlertTriangle, Copy, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { db } from '@/lib/firebase'; // Adjust path as needed
+import { doc, getDoc } from 'firebase/firestore';
 
 export default function MyReferralsPage() {
   const [referredUsers, setReferredUsers] = useState<ReferredUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
+  const [userName, setUserName] = useState<{ firstName: string; lastName: string } | null>(null);
+  const [copied, setCopied] = useState(false);
   const router = useRouter();
   const [currentUserMobile, setCurrentUserMobile] = useState<string | null>(null);
 
@@ -23,10 +27,35 @@ export default function MyReferralsPage() {
     } else {
       setError("User not identified. Please log in again.");
       setIsLoading(false);
-      // Optionally redirect to login after a delay
-      // setTimeout(() => router.push('/login'), 3000);
     }
   }, [router]);
+
+  // Fetch referral code and user name from Firebase
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!currentUserMobile) return;
+      
+      try {
+        const userDoc = await getDoc(doc(db, 'users', currentUserMobile));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setReferralCode(userData.generatedReferralCode || null);
+          
+          // Set user name (adjust field names based on your Firebase structure)
+          setUserName({
+            firstName: userData.firstName || userData.first_name || '',
+            lastName: userData.lastName || userData.last_name || ''
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    if (currentUserMobile) {
+      fetchUserData();
+    }
+  }, [currentUserMobile]);
 
   useEffect(() => {
     if (currentUserMobile) {
@@ -45,6 +74,18 @@ export default function MyReferralsPage() {
     }
   }, [currentUserMobile]);
 
+  const copyToClipboard = async () => {
+    if (referralCode) {
+      try {
+        await navigator.clipboard.writeText(referralCode);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    }
+  };
+
   const formatDate = (dateString: string) => {
     if (!dateString) return 'N/A';
     try {
@@ -58,6 +99,12 @@ export default function MyReferralsPage() {
     }
   };
 
+  const getWelcomeMessage = () => {
+    if (!userName) return 'Welcome!';
+    const fullName = `${userName.firstName} ${userName.lastName}`.trim();
+    return fullName ? `Welcome ${fullName}!` : 'Welcome!';
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-[calc(100vh-200px)]">
@@ -68,7 +115,48 @@ export default function MyReferralsPage() {
   }
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 space-y-6">
+      {/* Welcome and Referral Code Card - Updated to match Referred Users styling */}
+      <Card className="max-w-4xl mx-auto shadow-xl bg-muted">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">{getWelcomeMessage()}</CardTitle>
+          <CardDescription className="text-lg">
+            Share your referral code with friends and earn rewards
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="bg-background p-4 rounded-lg border">
+            <p className="text-sm font-medium mb-2">Your referral code is:</p>
+            <div className="flex items-center gap-3">
+              <code className="text-2xl font-bold bg-muted px-4 py-2 rounded-md flex-1 text-center border">
+                {referralCode || 'Buy a course to generate a referral code'}
+              </code>
+              {referralCode && (
+                <Button
+                  onClick={copyToClipboard}
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-4 h-4" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      Copy
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Referred Users Card */}
       <Card className="max-w-4xl mx-auto shadow-xl bg-muted">
         <CardHeader>
           <div className="flex items-center gap-3 mb-2">

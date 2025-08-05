@@ -226,52 +226,7 @@ export function GetStartedSection() {
             </p>
           </div>
 
-          {/* Action buttons */}
-          <div className="flex flex-wrap gap-4 justify-center items-center">
-            
-            <button 
-              className="group px-8 py-3 rounded-lg text-base font-semibold transition-all duration-300 flex items-center gap-2 hover:scale-102 text-white hover:shadow-lg"
-              style={{backgroundColor: '#7cb342'}}
-              onMouseEnter={(e) => e.target.style.backgroundColor = '#2d5a27'}
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#7cb342'}
-            >
-              Start Your Journey
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
-            </button>
-
-            <button 
-              className="px-8 py-3 rounded-lg text-base font-semibold transition-all duration-300 hover:scale-102 border-2 bg-white"
-              style={{
-                borderColor: '#7cb342',
-                color: '#7cb342'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#7cb342';
-                e.target.style.color = 'white';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = 'white';
-                e.target.style.color = '#7cb342';
-              }}
-            >
-              Refer & Earn
-            </button>
-
-            <button 
-              className="px-6 py-3 rounded-lg text-base underline transition-all duration-300"
-              style={{color: '#2d5a27'}}
-              onMouseEnter={(e) => {
-                e.target.style.color = '#1a1a1a';
-                e.target.style.backgroundColor = 'hsl(125, 25%, 97%)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.color = '#2d5a27';
-                e.target.style.backgroundColor = 'transparent';
-              }}
-            >
-              Contact Support
-            </button>
-          </div>
+          
 
           {/* Progress indicator */}
           <div className="flex justify-center gap-2 mt-12">

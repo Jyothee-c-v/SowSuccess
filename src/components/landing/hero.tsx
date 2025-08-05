@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
-
+import Link from "next/link";
 export function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [currentText, setCurrentText] = useState('');
@@ -101,7 +101,7 @@ export function HeroSection() {
                     opacity: 0.9
                   }}
                 >
-                  by Vishakyaa Foundation
+                  by Agriuttpan Solutions Pvt. Ltd.
                 </span>
               </h1>
             </div>
@@ -165,6 +165,7 @@ export function HeroSection() {
 
           {/* Action Buttons */}
           <div className="hero-actions-enhanced flex gap-6 justify-center flex-wrap">
+            <Link href="/register">
             <button 
               className="cta-primary-enhanced group relative px-8 py-4 border-none rounded-full text-lg font-semibold cursor-pointer overflow-hidden z-10 transition-all duration-300 hover:transform hover:translate-y-[-3px]"
               style={{
@@ -187,8 +188,8 @@ export function HeroSection() {
                    style={{
                      background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)'
                    }} />
-            </button>
-
+            </button></Link>
+            <Link href="/#training-programs">
             <button 
               className="cta-secondary-enhanced group relative px-8 py-4 border-2 rounded-full text-lg font-semibold cursor-pointer overflow-hidden z-10 transition-all duration-300 hover:transform hover:translate-y-[-3px]"
               style={{
@@ -211,6 +212,7 @@ export function HeroSection() {
                 <ArrowRight className="w-5 h-5 inline" />
               </span>
             </button>
+            </Link>
           </div>
         </div>
       </div>

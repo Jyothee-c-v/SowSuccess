@@ -24,7 +24,7 @@ export function FaqSection() {
   };
 
   return (
-    <section className="faq-section relative pb-20 md:pb-32 overflow-hidden" style={{backgroundColor: '#FBF9F6'}}>
+    <section id="faq" className="faq-section relative pb-20 md:pb-32 overflow-hidden" style={{backgroundColor: '#FBF9F6'}}>
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 pointer-events-none opacity-30">
         <div className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl" style={{backgroundColor: 'hsl(125, 30%, 95%)'}}></div>

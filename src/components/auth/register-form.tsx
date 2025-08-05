@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useTransition } from 'react';
@@ -10,24 +9,26 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-// Label component is not directly used, FormLabel is used from form.tsx
-// import { Label } from '@/components/ui/label'; 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from 'next/navigation';
-import { Leaf } from 'lucide-react';
+import { Leaf, Eye, EyeOff } from 'lucide-react';
 
 export function RegisterForm() {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      firstName: "",
+      lastName: "",
       mobile: "",
       password: "",
       confirmPassword: "",
@@ -59,7 +60,6 @@ export function RegisterForm() {
           });
           router.push('/login');
         } else {
-          // Fallback for unexpected result structure from server action
           const unexpectedError = "An unexpected error occurred. Please try again.";
           setError(unexpectedError);
           setSuccess(undefined);
@@ -70,7 +70,6 @@ export function RegisterForm() {
           });
         }
       } catch (err) {
-        // Catches errors if registerUser promise rejects (e.g., network issue or unhandled server error)
         console.error("Error submitting registration form:", err);
         const errorMessage = (err instanceof Error) ? err.message : "An unknown system error occurred.";
         setError(errorMessage);
@@ -94,6 +93,34 @@ export function RegisterForm() {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="First Name" type="text" disabled={isPending} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Last name" type="text" disabled={isPending} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="mobile"
@@ -114,7 +141,28 @@ export function RegisterForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="******" type="password" disabled={isPending} />
+                    <div className="relative">
+                      <Input 
+                        {...field} 
+                        placeholder="******" 
+                        type={showPassword ? "text" : "password"} 
+                        disabled={isPending} 
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                        onClick={() => setShowPassword(!showPassword)}
+                        disabled={isPending}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -127,14 +175,33 @@ export function RegisterForm() {
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="******" type="password" disabled={isPending} />
+                    <div className="relative">
+                      <Input 
+                        {...field} 
+                        placeholder="******" 
+                        type={showConfirmPassword ? "text" : "password"} 
+                        disabled={isPending} 
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        disabled={isPending}
+                      >
+                        {showConfirmPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            {/* Replaced direct error/success p tags with a single FormMessage-like display if needed,
-                but toast is primary feedback. For now, keeping the direct p tags for explicit messages. */}
             {error && <p className="text-sm font-medium text-destructive">{error}</p>}
             {success && <p className="text-sm font-medium text-green-600">{success}</p>}
             <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" disabled={isPending}>

@@ -1,14 +1,18 @@
 
 import { z } from 'zod';
 
+
 export const RegisterSchema = z.object({
-  mobile: z.string().regex(/^[0-9]{10}$/, "Mobile number must be 10 digits"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  confirmPassword: z.string().min(6, "Password must be at least 6 characters"),
+  firstName: z.string().min(1, "First name is required").min(1, "First name must be at least 2 characters"),
+  lastName: z.string().min(1, "Last name is required").min(1, "Last name must be at least 2 characters"),
+  mobile: z.string().min(10, "Mobile number must be at least 10 digits").max(15, "Mobile number is too long"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  confirmPassword: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
 });
+
 export type RegisterFormData = z.infer<typeof RegisterSchema>;
 
 export const LoginSchema = z.object({
@@ -128,3 +132,6 @@ export type ProgramDetails = {
   name: string;
   price: number;
 };
+
+
+

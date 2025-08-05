@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useTransition } from 'react';
@@ -11,16 +10,15 @@ import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-// Label component is not directly used, FormLabel is used from form.tsx
-// import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { Leaf } from 'lucide-react';
+import { Leaf, Eye, EyeOff } from 'lucide-react';
 
 export function LoginForm() {
   const [error, setError] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
 
@@ -59,7 +57,6 @@ export function LoginForm() {
           }
           router.push('/dashboard'); 
         } else {
-          // Fallback for unexpected result structure from server action
           const unexpectedError = "An unexpected error occurred during login.";
           setError(unexpectedError);
           toast({
@@ -72,7 +69,6 @@ export function LoginForm() {
           }
         }
       } catch (err) {
-        // Catches errors if loginUser promise rejects
         console.error("Error submitting login form:", err);
         const errorMessage = (err instanceof Error) ? err.message : "An unknown system error occurred.";
         setError(errorMessage);
@@ -86,6 +82,10 @@ export function LoginForm() {
         }
       }
     });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -118,7 +118,30 @@ export function LoginForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="******" type="password" disabled={isPending} />
+                    <div className="relative">
+                      <Input 
+                        {...field} 
+                        placeholder="******" 
+                        type={showPassword ? "text" : "password"} 
+                        disabled={isPending}
+                        className="pr-10"
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                        onClick={togglePasswordVisibility}
+                        disabled={isPending}
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                        )}
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
